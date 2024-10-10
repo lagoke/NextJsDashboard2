@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
+  const { id } = params;
 
   const [invoice, customers] = await Promise.all([
     fetchInvoiceById(id),
