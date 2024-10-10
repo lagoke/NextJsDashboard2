@@ -7,30 +7,22 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Edit Invoice',
 };
- 
 
 interface PageProps {
   params: { id: string };
 }
 
-
-//export default async function Page({ params }: { params: { id: string } }) {
-
-//export default function EditInvoicePage({ params }: PageProps) {
-
 export default async function Page({ params }: PageProps) {
-    //const id = params.id;
+  // Await the params if they are being passed as a promise (ensure params is synchronous first)
+  const { id } = params;
 
-    const { id } = params;
+  // Fetch the invoice and customers data
+  const [invoice, customers] = await Promise.all([fetchInvoiceById(id), fetchCustomers()]);
 
-    const [invoice, customers] = await Promise.all([
-        fetchInvoiceById(id),
-        fetchCustomers(),
-      ]);
-
-      if (!invoice) {
-        notFound();
-      }
+  // Handle the case where the invoice is not found
+  if (!invoice) {
+    notFound();
+  }
 
   return (
     <main>
